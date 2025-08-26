@@ -1026,7 +1026,6 @@
             }
         }
 
-        // Toggle between light and dark themes
         function toggleTheme() {
             const currentTheme = document.documentElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -1045,7 +1044,6 @@
             }
         }
         
-        // Apply the theme on the initial page load
         window.onload = applyTheme;
     </script>
 </body>

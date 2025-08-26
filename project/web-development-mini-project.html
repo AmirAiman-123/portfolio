@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Details | Web Development Mini Project</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Favicon Links -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        :root {
+            --bg-primary: #ffffff; --bg-secondary: #f8fafc; --bg-card: #ffffff; --text-primary: #1e293b; --text-secondary: #64748b; --text-accent: #475569; --accent-blue: #2563eb; --accent-blue-light: #3b82f6; --accent-green: #10b981; --accent-amber: #f59e0b; --border-color: #e2e8f0; --shadow-light: rgba(0, 0, 0, 0.05); --shadow-medium: rgba(0, 0, 0, 0.1); --gradient-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        [data-theme="dark"] {
+            --bg-primary: #0f172a; --bg-secondary: #1e293b; --bg-card: #1e293b; --text-primary: #f1f5f9; --text-secondary: #94a3b8; --text-accent: #cbd5e1; --accent-blue: #3b82f6; --accent-blue-light: #60a5fa; --accent-green: #34d399; --accent-amber: #fbbf24; --border-color: #334155; --shadow-light: rgba(0, 0, 0, 0.3); --shadow-medium: rgba(0, 0, 0, 0.5); --gradient-bg: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: var(--text-primary); background: var(--bg-primary); transition: all 0.3s ease; min-height: 100vh; }
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        .theme-toggle { position: fixed; top: 20px; right: 20px; z-index: 1000; background: var(--bg-card); border: 2px solid var(--border-color); border-radius: 50px; padding: 8px 16px; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease; box-shadow: 0 4px 6px var(--shadow-light); }
+        .theme-toggle:hover { transform: translateY(-2px); box-shadow: 0 8px 15px var(--shadow-medium); }
+        .theme-toggle i { font-size: 16px; color: var(--accent-blue); }
+        .theme-toggle span { font-size: 14px; font-weight: 500; color: var(--text-secondary); }
+        .section-card { background: var(--bg-card); border-radius: 20px; padding: 40px; box-shadow: 0 10px 30px var(--shadow-light); border: 1px solid var(--border-color); position: relative; overflow: hidden; }
+        .section-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--gradient-bg); border-radius: 20px 20px 0 0; }
+        .section-title { font-family: 'Poppins', sans-serif; font-size: 28px; font-weight: 600; color: var(--text-primary); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+        .section-icon { width: 40px; height: 40px; background: var(--gradient-bg); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px; }
+        .back-link { display: inline-block; margin-bottom: 30px; font-weight: 600; color: var(--accent-blue); text-decoration: none; transition: all 0.3s ease; }
+        .back-link:hover { text-decoration: underline; transform: translateX(-4px); }
+        .back-link i { margin-right: 8px; }
+        .project-description { font-size: 16px; line-height: 1.8; text-align: justify; color: var(--text-accent); margin-bottom: 30px; }
+        .project-details-heading { font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 600; margin-top: 40px; margin-bottom: 20px; color: var(--text-primary); border-bottom: 2px solid var(--border-color); padding-bottom: 10px; }
+        .project-features-list { list-style-position: inside; padding-left: 5px; color: var(--text-accent); }
+        .project-features-list li { margin-bottom: 10px; }
+        .project-tech { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+        .tech-tag { background: var(--accent-amber); color: white; padding: 5px 12px; border-radius: 15px; font-size: 12px; font-weight: 500; }
+        .footer { text-align: center; padding: 40px 0 20px 0; color: var(--text-secondary); font-size: 14px; }
+        .video-container { position: relative; overflow: hidden; width: 100%; padding-top: 56.25%; margin-top: 20px; border-radius: 10px; box-shadow: 0 10px 25px var(--shadow-light); background-color: #000; }
+        .video-container iframe { position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%; border: none; }
+        .project-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; margin-top: 20px; }
+        .gallery-image { width: 100%; border-radius: 10px; box-shadow: 0 5px 15px var(--shadow-light); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; }
+        .gallery-image:hover { transform: scale(1.03); box-shadow: 0 8px 25px var(--shadow-medium); }
+    </style>
+</head>
+<body>
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon" id="theme-icon"></i>
+        <span id="theme-text">Dark</span>
+    </div>
+
+    <div class="container">
+        <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i>Back to Main Portfolio</a>
+
+        <div class="section-card">
+            <h2 class="section-title">
+                <div class="section-icon"><i class="fas fa-code"></i></div>
+                (Assignment) Web Development Mini Project
+            </h2>
+            <p class="project-description">
+                Developed a simple interactive website using core web technologies: HTML for structure, CSS for styling, and JavaScript for client-side interactivity. This project also involved integrating a backend MySQL database to fetch and display dynamic content on the webpage.
+            </p>
+            
+          <h3 class="project-details-heading">Project Gallery</h3>
+            <div class="project-gallery">
+         <!--         <img src="../images/placeholder1.png" alt="Screenshot of the website homepage" class="gallery-image">
+                <img src="../images/placeholder2.png" alt="MySQL database schema diagram" class="gallery-image">
+                <img src="../images/placeholder3.png" alt="JavaScript code snippet for form validation" class="gallery-image">
+            </div> -->
+
+            <h3 class="project-details-heading">Key Objectives & What I Did</h3>
+            <ul class="project-features-list">
+                <li>Structured the website content using semantic HTML5 tags for better accessibility and SEO.</li>
+                <li>Designed a responsive layout with CSS, ensuring the site looks good on desktop and mobile.</li>
+                <li>Used JavaScript to implement interactive features like form validation and dynamic content updates.</li>
+                <li>Set up a MySQL database schema and connected it to the site's backend to serve data.</li>
+            </ul>
+
+            <h3 class="project-details-heading">Technologies Used</h3>
+            <div class="project-tech">
+                <div class="tech-tag">HTML</div>
+                <div class="tech-tag">CSS</div>
+                <div class="tech-tag">JavaScript</div>
+                <div class="tech-tag">MySQL</div>
+                <div class="tech-tag">Responsive Design</div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 Muhammad Amir Aiman</p>
+        <p>Some Photo or Gallery section for Proof Of my Work will Be Added In the future</p>
+    </footer>
+
+    <script>
+        function applyTheme(){const e=localStorage.getItem("theme")||"light";document.documentElement.setAttribute("data-theme",e);const t=document.getElementById("theme-icon"),a=document.getElementById("theme-text");"dark"===e?(t&&t.classList.replace("fa-moon","fa-sun"),a&&(a.textContent="Light")):(t&&t.classList.replace("fa-sun","fa-moon"),a&&(a.textContent="Dark"))}function toggleTheme(){const e="dark"===document.documentElement.getAttribute("data-theme")?"light":"dark";document.documentElement.setAttribute("data-theme",e),localStorage.setItem("theme",e);const t=document.getElementById("theme-icon"),a=document.getElementById("theme-text");"dark"===e?(t&&t.classList.replace("fa-moon","fa-sun"),a&&(a.textContent="Light")):(t&&t.classList.replace("fa-sun","fa-moon"),a&&(a.textContent="Dark"))}window.onload=applyTheme;
+    </script>
+</body>
+</html>
