@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammad Amir Aiman - Professional Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Import Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        /* Define CSS variables for themes */
+        :root {
+            /* Light Theme */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-card: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-accent: #475569;
+            --accent-blue: #2563eb;
+            --accent-blue-light: #3b82f6;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --border-color: #e2e8f0;
+            --shadow-light: rgba(0, 0, 0, 0.05);
+            --shadow-medium: rgba(0, 0, 0, 0.1);
+            --gradient-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        [data-theme="dark"] {
+            /* Dark Theme */
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-accent: #cbd5e1;
+            --accent-blue: #3b82f6;
+            --accent-blue-light: #60a5fa;
+            --accent-green: #34d399;
+            --accent-amber: #fbbf24;
+            --border-color: #334155;
+            --shadow-light: rgba(0, 0, 0, 0.3);
+            --shadow-medium: rgba(0, 0, 0, 0.5);
+            --gradient-bg: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        }
+        
+        /* General styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            transition: all 0.3s ease;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Theme toggle button styling */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            padding: 8px 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px var(--shadow-light);
+        }
+        
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px var(--shadow-medium);
+        }
+        
+        .theme-toggle i {
+            font-size: 16px;
+            color: var(--accent-blue);
+        }
+        
+        .theme-toggle span {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+        
+        /* Header section styling */
+        .header {
+            background: var(--gradient-bg);
+            color: white;
+            text-align: center;
+            padding: 60px 40px;
+            margin: -20px -20px 40px -20px;
+            border-radius: 0 0 30px 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><defs><radialGradient id="a" cx="50%" cy="40%"><stop offset="0%" stop-color="white" stop-opacity="0.1"/><stop offset="100%" stop-color="white" stop-opacity="0"/></radialGradient></defs><rect width="100" height="20" fill="url(%23a)"/></svg>');
+            opacity: 0.1;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .name {
+            font-family: 'Poppins', sans-serif;
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .title {
+            font-size: 20px;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+        
+        .header-badges {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+        
+        .badge {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Section styling */
+        .section {
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        /* Animation delays for sections */
+        .section:nth-child(2) { animation-delay: 0.1s; }
+        .section:nth-child(3) { animation-delay: 0.2s; }
+        .section:nth-child(4) { animation-delay: 0.3s; }
+        .section:nth-child(5) { animation-delay: 0.4s; }
+        .section:nth-child(6) { animation-delay: 0.5s; }
+        .section:nth-child(7) { animation-delay: 0.6s; }
+        .section:nth-child(8) { animation-delay: 0.7s; }
+        .section:nth-child(9) { animation-delay: 0.8s; }
+        
+        .section-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px var(--shadow-light);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-bg);
+            border-radius: 20px 20px 0 0;
+        }
+        
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px var(--shadow-medium);
+        }
+        
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-bg);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+        
+        /* About section */
+        .about-text {
+            font-size: 16px;
+            line-height: 1.8;
+            text-align: justify;
+            color: var(--text-accent);
+            margin-bottom: 20px;
+        }
+        
+        /* Education and Project sections */
+        .education-item, .project-item {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            border-left: 4px solid var(--accent-blue);
+            transition: all 0.3s ease;
+        }
+        
+        .education-item:hover, .project-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px var(--shadow-light);
+        }
+        
+        .education-title, .project-title {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+        
+        .education-subtitle, .project-subtitle {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin: 4px 0;
+            font-weight: 500;
+        }
+        
+        .education-details {
+            color: var(--text-accent);
+            font-size: 14px;
+            margin-top: 8px;
+        }
+        
+        .cgpa {
+            display: inline-block;
+            background: var(--accent-green);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        /* Skills section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .skill-category {
+            background: var(--bg-secondary);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .skill-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-bg);
+        }
+        
+        .skill-category:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px var(--shadow-light);
+        }
+        
+        .skill-category-title {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: var(--accent-blue);
+            font-size: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .skill-tag {
+            background: var(--accent-blue);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .skill-tag:hover {
+            background: var(--accent-blue-light);
+            transform: translateY(-2px);
+        }
+        
+        /* Certifications section */
+        .cert-item {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 4px solid var(--accent-green);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+            text-decoration: none; /* Remove underline from link */
+            color: var(--text-primary);
+        }
+        
+        .cert-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px var(--shadow-light);
+        }
+        
+        .cert-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+        
+        .cert-title {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 16px;
+        }
+
+        /* Projects section */
+        .project-description {
+            font-size: 15px;
+            color: var(--text-accent);
+            margin-top: 8px;
+            line-height: 1.6;
+        }
+        
+        .project-tech {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .tech-tag {
+            background: var(--accent-amber);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+        
+        /* Awards & Activities section */
+        .awards-list {
+            list-style: none;
+        }
+        
+        .awards-list li {
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            border-left: 4px solid var(--accent-amber);
+            font-size: 15px;
+            color: var(--text-accent);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .awards-list li:hover {
+            transform: translateX(5px);
+            box-shadow: 0 3px 10px var(--shadow-light);
+        }
+        
+        .award-icon {
+            color: var(--accent-amber);
+            font-size: 18px;
+        }
+        
+        /* Contact section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 16px;
+            color: var(--text-accent);
+            padding: 15px 20px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            text-decoration: none; /* Remove underline for links */
+        }
+        
+        .contact-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--shadow-light);
+        }
+        
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+        }
+        
+        .contact-text {
+            font-weight: 500;
+        }
+        
+        /* Languages section */
+        .languages {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .language-item {
+            background: var(--accent-blue);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .language-item:hover {
+            background: var(--accent-blue-light);
+            transform: translateY(-2px);
+        }
+        
+        /* Highlight bar */
+        .highlight {
+            background: linear-gradient(135deg, var(--accent-amber), #fbbf24);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(251, 191, 36, 0.3);
+        }
+        
+        .highlight-text {
+            font-size: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        /* Footer styling */
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-top: 20px;
+        }
+        
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .footer-content p {
+            margin-bottom: 5px;
+        }
+
+        /* Keyframe Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header {
+                padding: 40px 20px;
+                margin: -15px -15px 30px -15px;
+            }
+            
+            .name {
+                font-size: 32px;
+            }
+            
+            .title {
+                font-size: 18px;
+            }
+            
+            .section-card {
+                padding: 20px;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+                padding: 6px 12px;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            .theme-toggle {
+                display: none;
+            }
+            
+            .container {
+                padding: 15mm;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+            }
+            
+            .section-card {
+                box-shadow: none;
+                border: 1px solid #e2e8f0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle Button -->
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon" id="theme-icon"></i>
+        <span id="theme-text">Dark</span>
+    </div>
+    
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <div class="header-content">
+                <div class="name">Muhammad Amir Aiman</div>
+                <div class="title">Cloud Computing Technology Specialist</div>
+                <div class="header-badges">
+                    <div class="badge"><i class="fas fa-cloud"></i> Cloud Expert</div>
+                    <div class="badge"><i class="fas fa-shield-alt"></i> Security Focus</div>
+                    <div class="badge"><i class="fas fa-graduation-cap"></i> CGPA 3.83</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Me Section -->
+        <section class="section">
+            <div class="section-card">
+                <h2 class="section-title">
+                    <div class="section-icon"><i class="fas fa-user"></i></div>
+                    About Me
+                </h2>
+                <p class="about-text">
+                    I am a dedicated Diploma student in Computer Technology (Cloud Computing) at Institut Kemahiran MARA Besut with a strong passion for building and deploying innovative cloud-based solutions. My comprehensive academic journey has equipped me with hands-on experience across multiple cloud platforms, advanced networking protocols, server administration, and cybersecurity frameworks. I am enthusiastic about applying my technical expertise to real-world challenges, gaining valuable industry exposure, and evolving into a highly skilled cloud professional.
+                </p>
+                <div class="highlight">
+                    <div class="highlight-text">
+                        <i class="fas fa-check-circle"></i>
+                        Available for relocation &bull; Open to internship and job opportunities
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section class="section">
+            <div class="section-card">
+                <h2 class="section-title">
+                    <div class="section-icon"><i class="fas fa-graduation-cap"></i></div>
+                    Education
+                </h2>
+                <div class="education-item">
+                    <div class="education-title">Diploma Teknologi Komputer (Komputasi Awan)</div>
+                    <div class="education-subtitle">Institut Kemahiran MARA Besut, Terengganu</div>
+                    <div class="education-details">July 2023 &ndash; June 2026<span class="cgpa">CGPA: 3.83</span></div>
+                </div>
+                <div class="education-item">
+                    <div class="education-title">Sijil Pelajaran Malaysia (SPM)</div>
+                    <div class="education-subtitle">Maahad Muhammadi Pasir Mas, Kelantan</div>
+                    <div class="education-details">February 2018 &ndash; December 2022</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Skills Section -->
+        <section class="section">
+            <div class="section-card">
+                <h2 class="section-title">
+                    <div class="section-icon"><i class="fas fa-tools"></i></div>
+                    Technical Skills
+                </h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <div class="skill-category-title">
+                            <i class="fas fa-cloud"></i>
+                            Cloud Platforms
+                        </div>
+                        <div class="skill-tags">
+                            <div class="skill-tag">AWS</div>
+                            <div class="skill-tag">Microsoft Azure</div>
+                            <div class="skill-tag">Google Cloud</div>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <div class="skill-category-title">
+                            <i class="fas fa-server"></i>
+                            Virtualization & Containers
+                        </div>
+                        <div class="skill-tags">
+                            <div class="skill-tag">VMware</div>
+                            <div class="skill-tag">Docker</div>
+                            <div class="skill-tag">Kubernetes</div>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <div class="skill-category-title">
+                            <i class="fas fa-cogs"></i>
+                            Server Administration
+                        </div>
+                        <div class="skill-tags">
+                            <div class="skill-tag">Linux</div>
+                            <div class="skill-tag">Ubuntu</div>
+                            <div class="skill-tag">CentOS</div>
+                            <div class="skill-tag">Red Hat</div>
+                            <div class="skill-tag">Windows Server</div>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <div class="skill-category-title">
+                            <i class="fas fa-network-wired"></i>
+                            Networking & Security
+                        </div>
+                        <div class="skill-tags">
+                            <div class="skill-tag">TCP/IP</div>
+                            <div class="skill-tag">VPN</div>
+                            <div class="skill-tag">Load Balancers</div>
+                            <div class="skill-tag">IAM</div>
+                            <div class="skill-tag">Cloud Security</div>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <div class="skill-category-title">
+                            <i class="fas fa-code"></i>
+                            Programming & Web
+                        </div>
+                        <div class="skill-tags">
+                            <div class="skill-tag">Python</div>
+                            <div class="skill-tag">HTML</div>
+                            <div class="skill-tag">CSS</div>
+                            <div class="skill-tag">JavaScript</div>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <div class="skill-category-title">
+                            <i class="fas fa-database"></i>
+                            Databases
+                        </div>
+                        <div class="skill-tags">
+                            <div class="skill-tag">MySQL</div>
+                            <div class="skill-tag">PostgreSQL</div>
+                            <div class="skill-tag">MongoDB</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certifications Section -->
+        <section class="section">
+            <div class="section-card">
+                <h2 class="section-title">
+                    <div class="section-icon"><i class="fas fa-certificate"></i></div>
+                    Certifications
+                </h2>
+                <!-- Certificate 1 with a link -->
+                <a href="CCNAv7_certificate.pdf" target="_blank" class="cert-item">
+                    <div class="cert-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <div class="cert-title">CCNAv7: Switching, Routing, and Wireless Essentials</div>
+                </a>
+                <!-- Certificate 2 with a link -->
+                 <a href="CCNA_Enterprise_certificate.pdf" target="_blank" class="cert-item">
+                    <div class="cert-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <div class="cert-title">CCNA: Enterprise Networking, Security, and Automation</div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="section">
+            <div class="section-card">
+                <h2 class="section-title">
+                    <div class="section-icon"><i class="fas fa-project-diagram"></i></div>
+                    Projects & Highlights
+                </h2>
+                <!-- New Project Highlight (Template) -->
+                <div class="project-item">
+                    <div class="project-title">[Project Title]</div>
+                    <div class="project-description">
+                        [Briefly describe your project, its purpose, and the challenges you solved. Highlight your contributions and the impact of the project.]
+                    </div>
+                    <div class="project-tech">
+                        <div class="tech-tag">[Tech 1]</div>
+                        <div class="tech-tag">[Tech 2]</div>
+                        <div class="tech-tag">[Tech 3]</div>
+                    </div>
+                </div>
+                <!-- Existing Project Highlights -->
+                <div class="project-item">
+                    <div class="project-title">Cloud Deployment Practice</div>
+                    <div class="project-description">
+                        Configured and deployed virtual servers on AWS and Azure. Set up IAM roles, S3 storage, and VPC networking for secure access.
+                    </div>
+                    <div class="project-tech">
+                        <div class="tech-tag">AWS</div>
+                        <div class="tech-tag">Azure</div>
+                        <div class="tech-tag">IAM</div>
+                        <div class="tech-tag">VPC</div>
+                    </div>
+                </div>
+                <div class="project-item">
+                    <div class="project-title">Network Security Configuration</div>
+                    <div class="project-description">
+                        Implemented VPN and firewall rules for a simulated enterprise network. Applied best practices for IAM and identity access security.
+                    </div>
+                    <div class="project-tech">
+                        <div class="tech-tag">VPN</div>
+                        <div class="tech-tag">Firewall</div>
+                        <div class="tech-tag">Security</div>
+                    </div>
+                </div>
+                <div class="project-item">
+                    <div class="project-title">Server Administration Lab</div>
+                    <div class="project-description">
+                        Managed Linux servers (Ubuntu, CentOS, Red Hat) with shell scripting. Configured Windows Server for DNS and DHCP services.
+                    </div>
+                    <div class="project-tech">
+                        <div class="tech-tag">Linux</div>
+                        <div class="tech-tag">Shell Scripting</div>
+                        <div class="tech-tag">DNS</div>
+                        <div class="tech-tag">DHCP</div>
+                    </div>
+                </div>
+                <div class="project-item">
+                    <div class="project-title">Web Development Mini Project</div>
+                    <div class="project-description">
+                        Developed a simple interactive website using HTML, CSS, and JavaScript. Integrated backend database (MySQL) for dynamic content.
+                    </div>
+                    <div class="project-tech">
+                        <div class="tech-tag">HTML</div>
+                        <div class="tech-tag">CSS</div>
+                        <div class="tech-tag">JavaScript</div>
+                        <div class="tech-tag">MySQL</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Awards & Activities Section -->
+        <section class="section">
+            <div class="section-card">
+                <h2 class="section-title">
+                    <div class="section-icon"><i class="fas fa-trophy"></i></div>
+                    Awards & Activities
+                </h2>
+                <ul class="awards-list">
+                    <li>
+                        <i class="fas fa-medal award-icon"></i>
+                        <strong>2024:</strong> Participated in Kem Kepimpinan (Leadership Camp)
+                    </li>
+                    <li>
+                        <i class="fas fa-star award-icon"></i>
+                        <strong>2024:</strong> Competed in WorldSkills Malaysia Belia (WSMB)
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Languages Section -->
+        <section class="section">
+            <div class="section-card">
+                <h2 class="section-title">
+                    <div class="section-icon"><i class="fas fa-language"></i></div>
+                    Languages
+                </h2>
+                <div class="languages">
+                    <div class="language-item">
+                        <i class="fas fa-flag"></i> Malay (Fluent)
+                    </div>
+                    <div class="language-item">
+                        <i class="fas fa-flag"></i> English (Fluent)
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Information Section -->
+        <section class="section">
+            <div class="section-card">
+                <h2 class="section-title">
+                    <div class="section-icon"><i class="fas fa-address-book"></i></div>
+                    Contact Information
+                </h2>
+                <div class="contact-grid">
+                    <!-- Updated to be a mailto link -->
+                    <a href="mailto:amiraiman0906@gmail.com" class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-text">amiraiman0906@gmail.com</div>
+                    </a>
+                    <!-- Updated to be a tel link with a WhatsApp URL for mobile -->
+                    <a href="https://wa.me/601135412015" target="_blank" class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="contact-text">011-3541 2015 (WhatsApp)</div>
+                    </a>
+                    <!-- This one is an address, so it's not a link -->
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-text">Kampung Berangan, Pasir Mas, Kelantan</div>
+                    </div>
+                    <!-- Updated to be a link to GitHub -->
+                    <a href="https://github.com/AmirAiman-123" target="_blank" class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-github"></i>
+                        </div>
+                        <div class="contact-text">github.com/AmirAiman-123</div>
+                    </a>
+                    <!-- Updated to be a link to LinkedIn -->
+                    <a href="https://linkedin.com/in/amir-aiman-a16612357" target="_blank" class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-linkedin"></i>
+                        </div>
+                        <div class="contact-text">linkedin.com/in/amir-aiman-a16612357</div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p> 2025 Muhammad Amir Aiman</p>
+                <p>Designed and Built by Muhammad Amir Aiman </p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Check local storage for theme preference and apply it on load
+        function applyTheme() {
+            const currentTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            const themeIcon = document.getElementById('theme-icon');
+            const themeText = document.getElementById('theme-text');
+            if (currentTheme === 'dark') {
+                if (themeIcon) themeIcon.classList.replace('fa-moon', 'fa-sun');
+                if (themeText) themeText.textContent = 'Light';
+            } else {
+                if (themeIcon) themeIcon.classList.replace('fa-sun', 'fa-moon');
+                if (themeText) themeText.textContent = 'Dark';
+            }
+        }
+
+        // Toggle between light and dark themes
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // Update the icon and text
+            const themeIcon = document.getElementById('theme-icon');
+            const themeText = document.getElementById('theme-text');
+            if (newTheme === 'dark') {
+                if (themeIcon) themeIcon.classList.replace('fa-moon', 'fa-sun');
+                if (themeText) themeText.textContent = 'Light';
+            } else {
+                if (themeIcon) themeIcon.classList.replace('fa-sun', 'fa-moon');
+                if (themeText) themeText.textContent = 'Dark';
+            }
+        }
+        
+        // Apply the theme on the initial page load
+        window.onload = applyTheme;
+    </script>
+</body>
+</html>
