@@ -677,33 +677,475 @@
             }
         }
         
-        /* Print Styles */
-        @media print {
-            .theme-toggle {
+        /* ===== Scroll Progress Bar ===== */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--gradient-bg);
+            z-index: 9999;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        /* ===== Navigation Bar ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 24px;
+            height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            background: rgba(var(--bg-primary-rgb, 255, 255, 255), 0.85);
+        }
+
+        .navbar.visible {
+            height: 56px;
+            opacity: 1;
+        }
+
+        [data-theme="dark"] .navbar {
+            background: rgba(15, 23, 42, 0.85);
+        }
+
+        .navbar-logo {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .navbar-logo span {
+            background: var(--gradient-bg);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 4px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .navbar-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .navbar-links a:hover,
+        .navbar-links a.active {
+            color: var(--accent-blue);
+            background: var(--bg-secondary);
+        }
+
+        .navbar-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 2px;
+            background: var(--accent-blue);
+            border-radius: 2px;
+        }
+
+        /* Mobile nav toggle */
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 22px;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-toggle { display: block; }
+            .navbar-links {
+                position: absolute;
+                top: 56px;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: var(--bg-primary);
+                border-bottom: 1px solid var(--border-color);
+                padding: 12px;
+                gap: 2px;
                 display: none;
             }
+            .navbar-links.open { display: flex; }
+            .navbar-links a { padding: 10px 16px; width: 100%; }
+            .scroll-progress { display: none; }
+        }
+
+        /* ===== Back to Top ===== */
+        .back-to-top {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 999;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--gradient-bg);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(102,126,234,0.4);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+            pointer-events: none;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(102,126,234,0.5);
+        }
+
+        /* ===== Skill Progress Bars ===== */
+        .skill-progress-group {
+            margin-bottom: 18px;
+        }
+
+        .skill-progress-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .skill-progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .skill-progress-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .skill-progress-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent-blue);
+        }
+
+        .skill-progress-track {
+            width: 100%;
+            height: 6px;
+            background: var(--bg-primary);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .skill-progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            background: var(--gradient-bg);
+            width: 0%;
+            transition: width 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .skill-progress-fill.animated {
+            /* width set via JS */
+        }
+
+        /* ===== Project Filters ===== */
+        .project-filters {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .project-filter-btn {
+            padding: 8px 18px;
+            border-radius: 50px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .project-filter-btn:hover {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+        }
+
+        .project-filter-btn.active {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: white;
+        }
+
+        .project-link.filter-hidden {
+            display: none;
+        }
+
+        /* ===== Stats Counter ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 16px;
+        }
+
+        .stat-item {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px var(--shadow-light);
+        }
+
+        .stat-icon {
+            font-size: 28px;
+            color: var(--accent-blue);
+            margin-bottom: 8px;
+        }
+
+        .stat-number {
+            font-family: 'Poppins', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-top: 4px;
+        }
+
+        /* ===== Typing Cursor ===== */
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 24px;
+            background: white;
+            margin-left: 4px;
+            animation: blink 0.8s step-end infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* ===== Footer Social ===== */
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .footer-social a {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 15px;
+        }
+
+        .footer-social a:hover {
+            background: var(--accent-blue);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(37,99,235,0.3);
+            border-color: var(--accent-blue);
+        }
+
+        /* ===== Section Entrance Enhancements ===== */
+        .section.entered {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .section-card {
+            animation: cardFadeIn 0.8s ease forwards;
+        }
+
+        @keyframes cardFadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Section card hover accent variations */
+        .section-card[data-accent="blue"]::before { background: linear-gradient(135deg, #2563eb, #3b82f6); }
+        .section-card[data-accent="green"]::before { background: linear-gradient(135deg, #10b981, #34d399); }
+        .section-card[data-accent="amber"]::before { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
+        .section-card[data-accent="purple"]::before { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
+        .section-card[data-accent="pink"]::before { background: linear-gradient(135deg, #ec4899, #f472b6); }
+        .section-card[data-accent="cyan"]::before { background: linear-gradient(135deg, #06b6d4, #22d3ee); }
+
+        /* ===== Section Header with type badge ===== */
+        .section-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .section-header-row .section-title {
+            margin-bottom: 0;
+        }
+
+        .section-badge {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 50px;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== Nav Dots ===== */
+        .nav-dots {
+            position: fixed;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 99;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .nav-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+            background: var(--bg-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            transform: scale(1.3);
+        }
+
+        .nav-dot:hover {
+            border-color: var(--accent-blue);
+        }
+
+        @media (max-width: 768px) {
+            .nav-dots { display: none; }
+        }
+
+        /* Print Styles */
+        @media print {
+            .theme-toggle,
+            .scroll-progress,
+            .navbar,
+            .back-to-top,
+            .nav-dots,
+            .project-filters { display: none; }
             
-            .container {
-                padding: 15mm;
-            }
-            
-            .section {
-                page-break-inside: avoid;
-            }
-            
-            .section-card {
-                box-shadow: none;
-                border: 1px solid #e2e8f0;
-            }
+            .container { padding: 15mm; }
+            .section { page-break-inside: avoid; }
+            .section-card { box-shadow: none; border: 1px solid #e2e8f0; }
         }
     </style>
 </head>
 <body>
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <a href="#home" class="navbar-logo">
+            <i class="fas fa-cloud"></i>
+            <span>Amir Aiman</span>
+        </a>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <ul class="navbar-links" id="navLinks">
+            <li><a href="#about" class="active">About</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#maintenance">IT Support</a></li>
+            <li><a href="#certifications">Certifications</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
     <!-- Theme Toggle Button -->
     <div class="theme-toggle" onclick="toggleTheme()">
         <i class="fas fa-moon" id="theme-icon"></i>
         <span id="theme-text">Dark</span>
     </div>
+
+    <!-- Side Navigation Dots -->
+    <div class="nav-dots" id="navDots"></div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
     
     <div class="container">
         <!-- Header Section -->
@@ -711,7 +1153,7 @@
             <div class="header-content">
                 <img src="pictureprofile.jpeg" alt="Muhammad Amir Aiman" class="profile-picture">
                 <div class="name">Muhammad Amir Aiman</div>
-                <div class="title">Cloud Computing Technology Specialist</div>
+                <div class="title" id="typingTitle">Cloud Computing Technology Specialist<span class="typing-cursor"></span></div>
                 <div class="header-badges">
                     <div class="badge"><i class="fas fa-cloud"></i> Cloud Expert</div>
                     <div class="badge"><i class="fas fa-shield-alt"></i> Security Focus</div>
@@ -721,7 +1163,7 @@
         </div>
 
         <!-- About Me Section -->
-        <section class="section">
+        <section class="section" id="about">
             <div class="section-card">
                 <h2 class="section-title">
                     <div class="section-icon"><i class="fas fa-user"></i></div>
@@ -740,8 +1182,8 @@
         </section>
 
         <!-- Education Section -->
-        <section class="section">
-            <div class="section-card">
+        <section class="section" id="education">
+            <div class="section-card" data-accent="blue">
                 <h2 class="section-title">
                     <div class="section-icon"><i class="fas fa-graduation-cap"></i></div>
                     Education
@@ -760,83 +1202,71 @@
         </section>
 
         <!-- Technical Skills Section -->
-        <section class="section">
-            <div class="section-card">
-                <h2 class="section-title">
-                    <div class="section-icon"><i class="fas fa-tools"></i></div>
-                    Technical Skills
-                </h2>
-                <div class="skills-grid">
+        <section class="section" id="skills">
+            <div class="section-card" data-accent="purple">
+                <div class="section-header-row">
+                    <h2 class="section-title">
+                        <div class="section-icon"><i class="fas fa-tools"></i></div>
+                        Technical Skills
+                    </h2>
+                    <span class="section-badge"><i class="fas fa-chart-line"></i> Proficiency</span>
+                </div>
+                <div class="skills-grid" id="skillsGrid">
                     <div class="skill-category">
                         <div class="skill-category-title">
                             <i class="fas fa-cloud"></i>
                             Cloud Platforms
                         </div>
-                        <div class="skill-tags">
-                            <div class="skill-tag">AWS</div>
-                            <div class="skill-tag">Microsoft Azure</div>
-                            <div class="skill-tag">Google Cloud</div>
-                        </div>
+                        <div class="skill-progress-group"><div class="skill-progress-header"><span class="skill-progress-label">AWS</span><span class="skill-progress-value">90%</span></div><div class="skill-progress-track"><div class="skill-progress-fill" data-width="90"></div></div></div>
+                        <div class="skill-progress-group"><div class="skill-progress-header"><span class="skill-progress-label">Microsoft Azure</span><span class="skill-progress-value">85%</span></div><div class="skill-progress-track"><div class="skill-progress-fill" data-width="85"></div></div></div>
+                        <div class="skill-progress-group"><div class="skill-progress-header"><span class="skill-progress-label">Google Cloud</span><span class="skill-progress-value">75%</span></div><div class="skill-progress-track"><div class="skill-progress-fill" data-width="75"></div></div></div>
                     </div>
                     <div class="skill-category">
                         <div class="skill-category-title">
                             <i class="fas fa-server"></i>
                             Virtualization & Containers
                         </div>
-                        <div class="skill-tags">
-                            <div class="skill-tag">VMware</div>
-                            <div class="skill-tag">VMware ESXi</div>
-                            <div class="skill-tag">Oracle</div>
-                        </div>
+                        <div class="skill-progress-group"><div class="skill-progress-header"><span class="skill-progress-label">VMware</span><span class="skill-progress-value">80%</span></div><div class="skill-progress-track"><div class="skill-progress-fill" data-width="80"></div></div></div>
+                        <div class="skill-progress-group"><div class="skill-progress-header"><span class="skill-progress-label">VMware ESXi</span><span class="skill-progress-value">75%</span></div><div class="skill-progress-track"><div class="skill-progress-fill" data-width="75"></div></div></div>
+                        <div class="skill-progress-group"><div class="skill-progress-header"><span class="skill-progress-label">Oracle</span><span class="skill-progress-value">65%</span></div><div class="skill-progress-track"><div class="skill-progress-fill" data-width="65"></div></div></div>
                     </div>
                     <div class="skill-category">
                         <div class="skill-category-title">
                             <i class="fas fa-cogs"></i>
                             Server Administration
                         </div>
-                        <div class="skill-tags">
-                            <div class="skill-tag">Linux</div>
-                            <div class="skill-tag">Ubuntu</div>
-                            <div class="skill-tag">CentOS</div>
-                            <div class="skill-tag">Red Hat</div>
-                            <div class="skill-tag">Windows Server</div>
-                        </div>
+                        <div class="skill-progress-group"><div class="skill-progress-header"><span class="skill-progress-label">Linux</span><span class="skill-progress-value">88%</span></div><div class="skill-progress-track"><div class="skill-progress-fill" data-width="88"></div></div></div>
+                        <div class="skill-progress-group"><div class="skill-progress-header"><span class="skill-progress-label">Ubuntu</span><span class="skill-progress-value">85%</span></div><div class="skill-progress-track"><div class="skill-progress-fill" data-width="85"></div></div></div>
+                        <div class="skill-progress-group"><div class="skill-progress-header"><span class="skill-progress-label">CentOS / Red Hat</span><span class="skill-progress-value">80%</span></div><div class="skill-progress-track"><div class="skill-progress-fill" data-width="80"></div></div></div>
+                        <div class="skill-progress-group"><div class="skill-progress-header"><span class="skill-progress-label">Windows Server</span><span class="skill-progress-value">82%</span></div><div class="skill-progress-track"><div class="skill-progress-fill" data-width="82"></div></div></div>
                     </div>
                     <div class="skill-category">
                         <div class="skill-category-title">
                             <i class="fas fa-network-wired"></i>
                             Networking & Security
                         </div>
-                        <div class="skill-tags">
-                            <div class="skill-tag">TCP/IP</div>
-                            <div class="skill-tag">VPN</div>
-                            <div class="skill-tag">Load Balancers</div>
-                            <div class="skill-tag">IAM</div>
-                            <div class="skill-tag">Cloud Security</div>
-                        </div>
+                        <div class="skill-progress-group"><div class="skill-progress-header"><span class="skill-progress-label">TCP/IP</span><span class="skill-progress-value">90%</span></div><div class="skill-progress-track"><div class="skill-progress-fill" data-width="90"></div></div></div>
+                        <div class="skill-progress-group"><div class="skill-progress-header"><span class="skill-progress-label">VPN</span><span class="skill-progress-value">78%</span></div><div class="skill-progress-track"><div class="skill-progress-fill" data-width="78"></div></div></div>
+                        <div class="skill-progress-group"><div class="skill-progress-header"><span class="skill-progress-label">Load Balancers</span><span class="skill-progress-value">70%</span></div><div class="skill-progress-track"><div class="skill-progress-fill" data-width="70"></div></div></div>
+                        <div class="skill-progress-group"><div class="skill-progress-header"><span class="skill-progress-label">IAM / Cloud Security</span><span class="skill-progress-value">82%</span></div><div class="skill-progress-track"><div class="skill-progress-fill" data-width="82"></div></div></div>
                     </div>
                     <div class="skill-category">
                         <div class="skill-category-title">
                             <i class="fas fa-code"></i>
                             Programming & Web
                         </div>
-                        <div class="skill-tags">
-                            <div class="skill-tag">Python</div>
-                            <div class="skill-tag">HTML</div>
-                            <div class="skill-tag">CSS</div>
-                            <div class="skill-tag">JavaScript</div>
-                        </div>
+                        <div class="skill-progress-group"><div class="skill-progress-header"><span class="skill-progress-label">Python</span><span class="skill-progress-value">85%</span></div><div class="skill-progress-track"><div class="skill-progress-fill" data-width="85"></div></div></div>
+                        <div class="skill-progress-group"><div class="skill-progress-header"><span class="skill-progress-label">HTML / CSS</span><span class="skill-progress-value">82%</span></div><div class="skill-progress-track"><div class="skill-progress-fill" data-width="82"></div></div></div>
+                        <div class="skill-progress-group"><div class="skill-progress-header"><span class="skill-progress-label">JavaScript</span><span class="skill-progress-value">70%</span></div><div class="skill-progress-track"><div class="skill-progress-fill" data-width="70"></div></div></div>
                     </div>
                     <div class="skill-category">
                         <div class="skill-category-title">
                             <i class="fas fa-database"></i>
                             Databases
                         </div>
-                        <div class="skill-tags">
-                            <div class="skill-tag">MySQL</div>
-                            <div class="skill-tag">PostgreSQL</div>
-                            <div class="skill-tag">MongoDB</div>
-                        </div>
+                        <div class="skill-progress-group"><div class="skill-progress-header"><span class="skill-progress-label">MySQL</span><span class="skill-progress-value">80%</span></div><div class="skill-progress-track"><div class="skill-progress-fill" data-width="80"></div></div></div>
+                        <div class="skill-progress-group"><div class="skill-progress-header"><span class="skill-progress-label">PostgreSQL</span><span class="skill-progress-value">70%</span></div><div class="skill-progress-track"><div class="skill-progress-fill" data-width="70"></div></div></div>
+                        <div class="skill-progress-group"><div class="skill-progress-header"><span class="skill-progress-label">MongoDB</span><span class="skill-progress-value">65%</span></div><div class="skill-progress-track"><div class="skill-progress-fill" data-width="65"></div></div></div>
                     </div>
                 </div>
             </div>
@@ -847,7 +1277,7 @@
     
     
             <!-- Core IT Support & Maintenance Section -->
-        <section class="section">
+        <section class="section" id="maintenance">
             <div class="section-card">
                 <h2 class="section-title">
                     <div class="section-icon"><i class="fas fa-screwdriver-wrench"></i></div>
@@ -892,7 +1322,7 @@
 
 
         <!-- Certifications Section -->
-        <section class="section">
+        <section class="section" id="certifications">
             <div class="section-card">
                 <h2 class="section-title">
                     <div class="section-icon"><i class="fas fa-certificate"></i></div>
@@ -915,15 +1345,56 @@
             </div>
         </section>
 
-        <!-- Projects Section -->
-        <section class="section">
-            <div class="section-card">
+        <!-- Highlights Section -->
+        <section class="section" id="stats">
+            <div class="section-card" data-accent="amber">
                 <h2 class="section-title">
-                    <div class="section-icon"><i class="fas fa-project-diagram"></i></div>
-                    Projects & Highlights
+                    <div class="section-icon"><i class="fas fa-chart-simple"></i></div>
+                    At a Glance
                 </h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-icon"><i class="fas fa-cloud"></i></div>
+                        <div class="stat-number" data-target="6">0</div>
+                        <div class="stat-label">Cloud Platforms</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon"><i class="fas fa-project-diagram"></i></div>
+                        <div class="stat-number" data-target="5">0</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon"><i class="fas fa-certificate"></i></div>
+                        <div class="stat-number" data-target="2">0</div>
+                        <div class="stat-label">Certifications</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon"><i class="fas fa-laptop-code"></i></div>
+                        <div class="stat-number" data-target="20">0</div>
+                        <div class="stat-label">Tech Skills</div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                <a href="project/ai-enhanced-cloud-storage.html" class="project-link">
+        <!-- Projects Section -->
+        <section class="section" id="projects">
+            <div class="section-card" data-accent="cyan">
+                <div class="section-header-row">
+                    <h2 class="section-title">
+                        <div class="section-icon"><i class="fas fa-project-diagram"></i></div>
+                        Projects & Highlights
+                    </h2>
+                    <span class="section-badge"><i class="fas fa-folder-open"></i> Click to explore</span>
+                </div>
+
+                <div class="project-filters">
+                    <button class="project-filter-btn active" data-filter="all">All</button>
+                    <button class="project-filter-btn" data-filter="fyp">FYP</button>
+                    <button class="project-filter-btn" data-filter="assignment">Assignments</button>
+                </div>
+
+                <a href="project/ai-enhanced-cloud-storage.html" class="project-link" data-category="fyp">
                     <div class="project-item">
                         <div class="project-title">(FYP) AI Enhanced Cloud Storage For IKM Student (Finished) www.tvetikmbsmartdrive.com</div>
                         <div class="project-description">
@@ -937,7 +1408,7 @@
                     </div>
                 </a>
 
-<a href="project/cloud-deployment-practice.html" class="project-link">
+<a href="project/cloud-deployment-practice.html" class="project-link" data-category="assignment">
                     <div class="project-item">
                         <div class="project-title">(Assignment) Cloud Deployment Practice</div>
                         <div class="project-description">
@@ -952,7 +1423,7 @@
                     </div>
                 </a>
 
-<a href="project/network-security-configuration.html" class="project-link">
+<a href="project/network-security-configuration.html" class="project-link" data-category="assignment">
                     <div class="project-item">
                         <div class="project-title">(Assignment) Network Security Configuration</div>
                         <div class="project-description">
@@ -966,7 +1437,7 @@
                     </div>
                 </a>
 
-                <a href="project/server-administration-lab.html" class="project-link">
+                <a href="project/server-administration-lab.html" class="project-link" data-category="assignment">
                     <div class="project-item">
                         <div class="project-title">(Assignment) Server Administration Lab</div>
                         <div class="project-description">
@@ -981,7 +1452,7 @@
                     </div>
                 </a>
 
-<a href="project/web-development-mini-project.html" class="project-link">
+<a href="project/web-development-mini-project.html" class="project-link" data-category="assignment">
                     <div class="project-item">
                         <div class="project-title">(Assignment) Web Development Mini Project</div>
                         <div class="project-description">
@@ -999,7 +1470,7 @@
         </section>
 
         <!-- Awards & Activities Section -->
-        <section class="section">
+        <section class="section" id="awards">
             <div class="section-card">
                 <h2 class="section-title">
                     <div class="section-icon"><i class="fas fa-trophy"></i></div>
@@ -1037,7 +1508,7 @@
         </section>
 
         <!-- Contact Information Section -->
-        <section class="section">
+        <section class="section" id="contact">
             <div class="section-card">
                 <h2 class="section-title">
                     <div class="section-icon"><i class="fas fa-address-book"></i></div>
@@ -1086,49 +1557,272 @@
         <!-- Footer -->
         <footer class="footer">
             <div class="footer-content">
-                <p> 2025 Muhammad Amir Aiman</p>
-                <p>Designed and Built by Muhammad Amir Aiman </p>
+                <p>&copy; 2025 Muhammad Amir Aiman</p>
+                <p>Designed &amp; Built with <i class="fas fa-heart" style="color: var(--accent-red, #ef4444);"></i> by Muhammad Amir Aiman</p>
+                <div class="footer-social">
+                    <a href="https://github.com/AmirAiman-123" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/muhammad-amir-aiman-abd-hadi-a16612357" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:amiraiman0906@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                    <a href="https://wa.me/601135412015" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                </div>
             </div>
         </footer>
     </div>
 
     <script>
-        // Check local storage for theme preference and apply it on load
+        // ===== Theme =====
         function applyTheme() {
-            const currentTheme = localStorage.getItem('theme') || 'light';
-            document.documentElement.setAttribute('data-theme', currentTheme);
-            const themeIcon = document.getElementById('theme-icon');
-            const themeText = document.getElementById('theme-text');
-            if (currentTheme === 'dark') {
-                if (themeIcon) themeIcon.classList.replace('fa-moon', 'fa-sun');
-                if (themeText) themeText.textContent = 'Light';
+            const t = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', t);
+            updateThemeUI(t);
+        }
+
+        function toggleTheme() {
+            const cur = document.documentElement.getAttribute('data-theme');
+            const next = cur === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            updateThemeUI(next);
+        }
+
+        function updateThemeUI(theme) {
+            const icon = document.getElementById('theme-icon');
+            const text = document.getElementById('theme-text');
+            if (!icon || !text) return;
+            if (theme === 'dark') {
+                icon.classList.replace('fa-moon', 'fa-sun');
+                text.textContent = 'Light';
             } else {
-                if (themeIcon) themeIcon.classList.replace('fa-sun', 'fa-moon');
-                if (themeText) themeText.textContent = 'Dark';
+                icon.classList.replace('fa-sun', 'fa-moon');
+                text.textContent = 'Dark';
             }
         }
 
-        // Toggle between light and dark themes
-        function toggleTheme() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            
-            // Update the icon and text
-            const themeIcon = document.getElementById('theme-icon');
-            const themeText = document.getElementById('theme-text');
-            if (newTheme === 'dark') {
-                if (themeIcon) themeIcon.classList.replace('fa-moon', 'fa-sun');
-                if (themeText) themeText.textContent = 'Light';
-            } else {
-                if (themeIcon) themeIcon.classList.replace('fa-sun', 'fa-moon');
-                if (themeText) themeText.textContent = 'Dark';
-            }
+        // ===== Scroll Progress =====
+        function initScrollProgress() {
+            const bar = document.getElementById('scrollProgress');
+            if (!bar) return;
+            window.addEventListener('scroll', () => {
+                const h = document.documentElement;
+                const total = h.scrollHeight - h.clientHeight;
+                bar.style.width = total > 0 ? (h.scrollTop / total * 100) + '%' : '0%';
+            });
         }
-        
-        // Apply the theme on the initial page load
-        window.onload = applyTheme;
+
+        // ===== Navbar =====
+        function initNavbar() {
+            const navbar = document.getElementById('navbar');
+            const toggle = document.getElementById('navToggle');
+            const links = document.getElementById('navLinks');
+            const navAnchors = links ? links.querySelectorAll('a') : [];
+
+            if (toggle && links) {
+                toggle.addEventListener('click', () => {
+                    links.classList.toggle('open');
+                    const icon = toggle.querySelector('i');
+                    if (icon) icon.className = links.classList.contains('open') ? 'fas fa-times' : 'fas fa-bars';
+                });
+            }
+
+            // Show/hide navbar on scroll
+            let lastScroll = 0;
+            window.addEventListener('scroll', () => {
+                const st = window.scrollY;
+                if (st > 200) {
+                    navbar.classList.add('visible');
+                } else {
+                    navbar.classList.remove('visible');
+                }
+                lastScroll = st;
+            });
+
+            // Active nav link + smooth scroll
+            navAnchors.forEach(a => {
+                a.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const id = a.getAttribute('href')?.slice(1);
+                    const target = document.getElementById(id);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                    // Close mobile menu
+                    if (links) links.classList.remove('open');
+                    if (toggle) toggle.querySelector('i').className = 'fas fa-bars';
+                });
+            });
+
+            // Update active link on scroll
+            window.addEventListener('scroll', () => {
+                const sections = navAnchors.map(a => document.getElementById(a.getAttribute('href')?.slice(1))).filter(Boolean);
+                let current = '';
+                sections.forEach(sec => {
+                    const rect = sec.getBoundingClientRect();
+                    if (rect.top <= 120) current = sec.id;
+                });
+                navAnchors.forEach(a => {
+                    a.classList.toggle('active', a.getAttribute('href')?.slice(1) === current);
+                });
+            });
+        }
+
+        // ===== Back to Top =====
+        function initBackToTop() {
+            const btn = document.getElementById('backToTop');
+            if (!btn) return;
+            window.addEventListener('scroll', () => {
+                btn.classList.toggle('visible', window.scrollY > 400);
+            });
+            btn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+
+        // ===== Skill Bars Animation =====
+        function initSkillBars() {
+            const fills = document.querySelectorAll('.skill-progress-fill');
+            if (!fills.length) return;
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const fill = entry.target;
+                        const w = fill.getAttribute('data-width');
+                        if (w) fill.style.width = w + '%';
+                        observer.unobserve(fill);
+                    }
+                });
+            }, { threshold: 0.2 });
+            fills.forEach(f => observer.observe(f));
+        }
+
+        // ===== Project Filter =====
+        function initProjectFilter() {
+            const btns = document.querySelectorAll('.project-filter-btn');
+            const projects = document.querySelectorAll('.project-link[data-category]');
+            btns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    btns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const filter = btn.getAttribute('data-filter');
+                    projects.forEach(p => {
+                        if (filter === 'all' || p.getAttribute('data-category') === filter) {
+                            p.classList.remove('filter-hidden');
+                        } else {
+                            p.classList.add('filter-hidden');
+                        }
+                    });
+                });
+            });
+        }
+
+        // ===== Stats Counter =====
+        function initStatsCounter() {
+            const stats = document.querySelectorAll('.stat-number[data-target]');
+            if (!stats.length) return;
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const el = entry.target;
+                        const target = parseInt(el.getAttribute('data-target'));
+                        let current = 0;
+                        const step = Math.max(1, Math.ceil(target / 40));
+                        const timer = setInterval(() => {
+                            current += step;
+                            if (current >= target) {
+                                el.textContent = target;
+                                clearInterval(timer);
+                            } else {
+                                el.textContent = current;
+                            }
+                        }, 30);
+                        observer.unobserve(el);
+                    }
+                });
+            }, { threshold: 0.3 });
+            stats.forEach(s => observer.observe(s));
+        }
+
+        // ===== Typing Effect =====
+        function initTypingEffect() {
+            const el = document.getElementById('typingTitle');
+            if (!el) return;
+            const text = el.textContent.replace('|', '').trim();
+            const cursor = el.querySelector('.typing-cursor');
+            el.textContent = '';
+            if (cursor) el.appendChild(cursor);
+            let i = 0;
+            const speed = 50;
+            function type() {
+                if (i < text.length) {
+                    if (cursor) el.insertBefore(document.createTextNode(text[i]), cursor);
+                    else el.textContent += text[i];
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            setTimeout(type, 600);
+        }
+
+        // ===== Nav Dots =====
+        function initNavDots() {
+            const container = document.getElementById('navDots');
+            const sections = document.querySelectorAll('.section[id]');
+            if (!container || !sections.length) return;
+            const labels = ['About', 'Education', 'Skills', 'IT Support', 'Certifications', 'Highlights', 'Projects', 'Awards', 'Contact'];
+            sections.forEach((sec, idx) => {
+                const dot = document.createElement('div');
+                dot.className = 'nav-dot';
+                dot.title = labels[idx] || sec.id;
+                dot.addEventListener('click', () => sec.scrollIntoView({ behavior: 'smooth' }));
+                container.appendChild(dot);
+            });
+            const dots = container.querySelectorAll('.nav-dot');
+            window.addEventListener('scroll', () => {
+                let activeIdx = 0;
+                sections.forEach((sec, idx) => {
+                    const rect = sec.getBoundingClientRect();
+                    if (rect.top <= 200) activeIdx = idx;
+                });
+                dots.forEach((d, idx) => d.classList.toggle('active', idx === activeIdx));
+            });
+        }
+
+        // ===== Section Scroll Reveal =====
+        function initScrollReveal() {
+            const cards = document.querySelectorAll('.section-card');
+            if (!cards.length) return;
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+            cards.forEach(c => {
+                c.style.opacity = '0';
+                c.style.transform = 'translateY(30px)';
+                c.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+                observer.observe(c);
+            });
+        }
+
+        // ===== Init All =====
+        document.addEventListener('DOMContentLoaded', () => {
+            applyTheme();
+            initScrollProgress();
+            initNavbar();
+            initBackToTop();
+            initSkillBars();
+            initProjectFilter();
+            initStatsCounter();
+            initTypingEffect();
+            initNavDots();
+            initScrollReveal();
+        });
+
+        window.applyTheme = applyTheme;
+        window.toggleTheme = toggleTheme;
     </script>
 </body>
 </html>
