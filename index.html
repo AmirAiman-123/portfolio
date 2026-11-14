@@ -6,12 +6,12 @@
 <meta name="theme-color" content="#f0eee6" id="themeColorMeta">
 <title>Amir Aiman — Software Engineering · WSMB 2026 Gold</title>
 
-<!-- Pre-load theme (before paint) -->
+<!-- Pre-load theme (before paint) — light by default on first visit -->
 <script>
 (function(){
   try{
     var t = localStorage.getItem('theme');
-    if(!t){ t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; }
+    if(!t){ t = 'light'; }
     document.documentElement.setAttribute('data-theme', t);
     var m = document.querySelector('meta[name="theme-color"]');
     if(m) m.setAttribute('content', t === 'dark' ? '#0a1220' : '#f0eee6');
